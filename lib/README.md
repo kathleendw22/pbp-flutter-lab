@@ -79,7 +79,7 @@ Pada aplikasi Flutter, terdapat class Navigator yang berfungsi untuk melakukan n
 - onPressed: ketika widget ditekan
 - onSaved: ketika widget disimpan
 - onChanged: ketika widget diubah
-- onTap: : ketika widget diklik
+- onTap: ketika widget diklik
 
 ## How Navigator Works
 Class Navigation memiliki struktur berupa stack. Saat melakukan metode push, suatu halaman dimasukkan ke dalam stack. Berdasarkan struktur stack, maka elemen paling atas dari stack adalah halaman yang dapat dilihat pada layar gawai. Sementara itu, suatu halaman akan dihilangkan dari stack saat melakukan metode pop. Dengan metode ini, maka halaman yang berada pada layar gawai adalah halaman yang dipush sebelum halaman yang dipop tersebut. 
