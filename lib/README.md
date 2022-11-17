@@ -85,8 +85,8 @@ Pada aplikasi Flutter, terdapat class Navigator yang berfungsi untuk melakukan n
 Class Navigation memiliki struktur berupa stack. Saat melakukan metode push, suatu halaman dimasukkan ke dalam stack. Berdasarkan struktur stack, maka elemen paling atas dari stack adalah halaman yang dapat dilihat pada layar gawai. Sementara itu, suatu halaman akan dihilangkan dari stack saat melakukan metode pop. Dengan metode ini, maka halaman yang berada pada layar gawai adalah halaman yang dipush sebelum halaman yang dipop tersebut. 
 
 ## Checklist Implementation
-- Masuk ke counter_7/lib/main.dart
-- Menambahkan widget Drawer pada class _MyHomePageState. Widget ini berisi menu untuk melakukan navigasi ke halaman counter, form budget, atau data budget.
+1. Masuk ke counter_7/lib/main.dart
+2. Menambahkan widget Drawer pada class _MyHomePageState. Widget ini berisi menu untuk melakukan navigasi ke halaman counter, form budget, atau data budget.
 
 ```
 drawer: Drawer(
@@ -128,8 +128,9 @@ drawer: Drawer(
 ),
 ```
 
-- Membuat file dart baru bernama form.dart untuk menangani halaman form budget dan data.dart untuk menangani halaman data budget.
-- Pada file form.dart, digunakan widget DateTime untuk meminta input tanggal, TextFormField untuk meminta input judul dan nominal, DropdownButton untuk memilih tipe budget yaitu pemasukan atau pengeluaran, FloatingButtonAction.extended untuk menyimpan data pada sebuah list, dan Dialog untuk menginfokan bahwa data telah berhasil disimpan.
+3. Membuat file dart baru bernama form.dart untuk menangani halaman form budget dan data.dart untuk menangani halaman data budget.
+
+4. Pada file form.dart, digunakan widget DateTime untuk meminta input tanggal, TextFormField untuk meminta input judul dan nominal, DropdownButton untuk memilih tipe budget yaitu pemasukan atau pengeluaran, FloatingButtonAction.extended untuk menyimpan data pada sebuah list, dan Dialog untuk menginfokan bahwa data telah berhasil disimpan.
 
 ```
 body: Form(
