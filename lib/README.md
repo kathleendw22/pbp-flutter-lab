@@ -310,7 +310,7 @@ floatingActionButton: FloatingActionButton.extended(
 floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 ```
 
-- Pada file data.dart, dilakukan iterasi pada list untuk mengambil data yang sudah berhasil disimpan. Setiap data yang berhasil disimpan akan ditampilkan melalui widget Container.
+5. Pada file data.dart, dilakukan iterasi pada list untuk mengambil data yang sudah berhasil disimpan. Setiap data yang berhasil disimpan akan ditampilkan melalui widget Container.
 
 ```
 body: SingleChildScrollView(
