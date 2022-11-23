@@ -358,3 +358,130 @@ body: SingleChildScrollView(
 ```
 
 
+
+# TUGAS 9 PBP
+
+## Pengambilan Data JSON Tanpa Model
+Saat membuat aplikasi yang terhubung dengan jaringan, kemungkinan besar kita akan perlu bekerja dengan JSON sehingga kita perlu mengetahui dua strategi umum untuk bekerja dengan JSON, yaitu manual serialization dan automated serialization using code generation. Flutter memiliki library bawaan yang mencakup sebuah encoder dan decoder JSON yaitu "dart:convert". Dengan library ini, kita dapat melakukan manual serialization melalui dua cara, yaitu serializing JSON inline (tanpa model) atau serializing JSON inside model classes (dengan model). Kita dapat melakukan pengambilan data JSON tanpa membuat model terlebih dahulu dengan cara pertama, spesifiknya dengan men-decode JSON melalui pemanggilan fungsi jsonDecode() yang mengambil string JSON sebagai parameter fungsi. Namun, fungsi ini akan mengembalikan sebuah Map < String, dynamic > sehingga kita tidak akan mengetahui tipe value sampai runtime. Dengan begitu, kita tidak akan mendapatkan type safety, autocompletion, ataupun compile-time exceptions. Kode kita akan menjadi lebih rawan akan eror. Maka dari itu, lebih baik jika membuat model sebelum melakukan pengambilan data JSON. Dengan membuat model, kita bisa mengetahui tipe value sebelum runtime.
+
+## Widget in My Watch List
+- MaterialApp: mengakses semua komponen dan widget yang disediakan oleh Flutter
+- Scaffold: menyediakan API yang beragam dan aplikasi menempati seluruh layar perangkat
+- AppBar: komponen paling atas dari aplikasi
+- Text: menampilkan teks pada aplikasi
+- Center: menyelaraskan widget ke center pada layar
+- Column: memposisikan widget secara vertikal
+- TextStyle: menambahkan style pada teks 
+- Theme: menambahkan tema pada aplikasi
+- Padding: mengatur posisi widget dengan menambahkan padding (ruang kosong)
+- Row: memposisikan widget secara horizontal
+- FloatingActionButton: button berbentuk lingkar yang berada di atas widget lain pada aplikasi
+- Spacer: menambahkan spasi atau ruang antar widget
+- Icon: menampilkan gambar grafis yang diinginkan pada aplikasi
+- Drawer: menampilkan menu untuk melakukan navigasi ke berbagai halaman berbeda
+- ListTile: membentuk sebuah list yang berisi widget-widget lain
+- Navigator: melakukan navigasi ke berbagai halaman berbeda
+- SingleChildScrollView: melakukan scrolling pada satu child
+- Container: membungkus widget-widget lain
+- BoxDecoration: menyediakan metode-metode untuk membuat sebuah box
+- SizedBox: membuat sebuah box dengan ukuran tertentu
+- Form: menerima input dari pengguna
+- InputDecoration: menampilkan elemen visual dari widget
+- TextFormField: mengizinkan pengguna untuk menulis sebuah teks pada bagian form
+- DateTime: merepresentasikan waktu dan tanggal
+- DropdownButton: menyediakan beberapa pilihan untuk dipilih oleh pengguna
+- Dialog: memberikan informasi kepada pengguna
+- OutlineInputBorder: membuat border sebagai input decoration widget
+- DropdownMenuItem: pilihan-pilihan yang disediakan pada dropdown button
+- ListView: menampilkan setiap widget child satu per satu dengan scrolling
+- RichText: menampilkan teks (objek TextSpan) dengan berbagai style berbeda
+- TextSpan: merentang teks menjadi beberapa teks
+- FutureBuilder: membuat widget berdasarkan interaksi terakhir dengan Future
+- CircularProgressIndicator: mengindikasikan bahwa aplikasi sedang sibuk
+
+## Mekanisme Pengambilan Data JSON
+1. Menambahkan package http yang menyediakan metode get untuk mengambil data dari internet dengan menjalankan "flutter pub add http" pada terminal.
+2. Mengimpor package dengan potongan kode berikut.
+```
+import 'package:http/http.dart' as http;
+```
+3. Menambahkan potongan kode berikut pada file "android/app/src/main/AndroidManifest.xml" untuk mengizinkan akses Internet pada aplikasi Flutter yang sedang dibuat.
+```
+...
+    <application>
+    ...
+    </application>
+    <!-- Required to fetch data from the Internet. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+...
+```
+4. Membuat sebuah fungsi untuk melakukan pengambilan data JSON dari internet dengan metode http.get(Uri.parse(< situs web >)) dan menaruh hasilnya pada sebuah variabel (misal: response)
+5. Fungsi ini akan mengembalikan suatu objek Future yang mengandung respon yang kita inginkan. Pada tugas 9 PBP, fungsi fetchMyWatchList() mengembalikan sebuah objek Future yang mengandung sebuah List bertipe MyWatchList. (Future merupakan sebuah class untuk bekerja secara asinkronus. Objek Future merepresentasikan sebuah value yang dapat terbentuk di masa depan.)
+6. Melakukan decode variabel response menjadi bentuk JSON dengan library "dart:convert" dan menaruh hasilnya pada sebuah variabel (misal: data)
+7. Melakukan konversi data JSON menjadi objek yang diinginkan dengan potongan kode < objek >.fromJson(data)
+8. Dengan menggunakan widget FutureBuilder, fungsi yang telah dibuat akan dipanggil. Contoh pada tugas 9 PBP adalah sebagai berikut.
+```
+FutureBuilder(
+    future: fetchMyWatchList(),
+    ...
+)
+```
+9. Membuat sebuah fungsi builder yang memberitahu Flutter apa yang ingin dirender, tergantung pada state Future yaitu sukses atau eror. Fungsi ini akan menampilkan data pada Flutter jika data JSON sukses diambil dan jika JSON tidak kosong. Contoh pada tugas 9 PBP adalah sebagai berikut.
+```
+...
+builder: (context, AsyncSnapshot snapshot) {
+    if (snapshot.data == null) { // jika gagal mengambil data JSON
+        // return something
+    } else { // jika sukses mengambil data JSON
+        if (!snapshot.hasData) { // jika JSON kosong
+            // return something 
+        } else { // jika JSON tidak kosong
+            // return something
+        }
+    }
+}
+...
+```
+
+## Checklist Implementation
+1. Masuk ke counter_7/lib/main.dart
+2. Menambahkan menu untuk melakukan navigasi ke halaman "My Watch List" pada widget "drawer" pada class "_MyHomePageState"
+```
+...
+ListTile (
+    title: const Text('My Watch List'),
+    onTap: () {
+    // Route menu ke halaman form
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const MyWatchListPage()),
+        );
+    },
+),
+...
+```
+
+3. Membuat dua folder bernama "model" dan "page" pada folder "lib"
+4. Memasukkan file "form.dart" dan "data.dart" dari Tugas 8 PBP ke dalam folder "page" yang telah dibuat
+5. Menambahkan kode di atas pada file "form.dart" dan "data.dart" untuk membuat menu navigasi ke halaman "My Watch List"
+6. Membuka situs web "https://tugasduapebepe.herokuapp.com/mywatchlist/json/" dan mengambil data JSON pada web tersebut
+7. Membuka situs web Quicktype dan menyalin data JSON yang telah diambil pada web Quicktype
+8. Membuat sebuah file baru bernama "my_watch_list.dart" pada folder "model" yang berisi kode yang telah digenerate oleh Quicktype berdasarkan data JSON Tugas 3
+9. Menambahkan keyword "required" pada setiap parameter model pada bagian constructor
+10. Menambahkan potongan kode berikut pada file "android/app/src/main/AndroidManifest.xml" untuk mengizinkan akses Internet pada aplikasi Flutter yang sedang dibuat.
+```
+...
+    <application>
+    ...
+    </application>
+    <!-- Required to fetch data from the Internet. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+...
+```
+
+11. Membuat sebuah file baru bernama "mywatchlist.dart" pada folder "page". Pada file ini, dilakukan pengambilan data JSON dari web "https://tugasduapebepe.herokuapp.com/mywatchlist/json/" dengan metode http.get. Lalu, ditampilkan setiap judul film yang ada pada watchlist dengan widget ListTile dan digunakan event onTap untuk masuk ke halaman detail dari setiap film. Untuk navigasi ke halaman detail, digunakan metode push, bukan pushReplacement, karena kita ingin menambahkan tombol "back" pada halaman detail yang dapat kembali ke halaman sebelumnya.
+12. Membuat sebuah file baru bernama "detailwatchlist.dart" pada folder "page". Pada file ini, ditampilkan detail dari setiap film yang ada pada watchlist dan ditambahkan tombol "back" untuk kembali ke halaman sebelumnya.
+
+
+
